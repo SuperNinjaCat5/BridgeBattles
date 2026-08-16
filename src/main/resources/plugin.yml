@@ -1,0 +1,9 @@
+name: BridgeBattles
+version: '${version}'
+
+main: io.github.superninjacat5.bridgeBattles.BridgeBattles
+api-version: '26.2'
+load: POSTWORLD
+
+authors: [ Ben Elliott ]
+website: superninjacat5.us
