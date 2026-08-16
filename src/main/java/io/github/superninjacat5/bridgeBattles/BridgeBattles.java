@@ -2,6 +2,9 @@ package io.github.superninjacat5.bridgeBattles;
 
 import io.github.superninjacat5.bridgeBattles.instances.Instance;
 import io.github.superninjacat5.bridgeBattles.instances.InstanceManager;
+import io.github.superninjacat5.bridgeBattles.instances.lobby.Lobby;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -16,11 +19,21 @@ public final class BridgeBattles extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
+
+        World spawnWorld = Bukkit.getWorlds().getFirst();
+        instanceManager.createLobby(spawnWorld);
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage(Component.text("Hello, " + event.getPlayer().getName() + "!"));
+        Player player = event.getPlayer();
+        Instance instance = instanceManager.getInstanceByWorld(player.getWorld());
+
+        if (instance == null) return;
+
+        if (!(instance instanceof Lobby)) return;
+
+        player.sendMessage(Component.text("Welcome, " + event.getPlayer().getName() + "!"));
     }
 
 

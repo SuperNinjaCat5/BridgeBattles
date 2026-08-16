@@ -12,6 +12,17 @@ public class InstanceManager {
     private final Map<UUID, Arena> arenas = new HashMap<>();
     private final Map<UUID, Lobby> lobbies = new HashMap<>();
 
+    private final Map<UUID, Instance> instancesByUID = new HashMap<>();
+
+    public Instance getInstanceByWorld(World world) {
+        if (world == null) return null;
+        return instancesByUID.get(world.getUID());
+    }
+
+    public Map<UUID, Instance> getInstancesByUID() {
+        return instancesByUID;
+    }
+
     // Arenas
 
     public Map<UUID, Arena> getArenas() {
@@ -27,14 +38,17 @@ public class InstanceManager {
         Arena newArena = new Arena(uuid,world);
 
         arenas.put(uuid, newArena);
+        instancesByUID.put(world.getUID(), newArena);
         return newArena;
     }
 
     public void addArena(UUID uuid, Arena arena) {
         this.arenas.put(uuid, arena);
+        this.instancesByUID.put(arena.getWorld().getUID(), arena);
     }
 
     public void removeArena(UUID uuid) {
+        this.instancesByUID.remove(arenas.get(uuid).getWorld().getUID());
         this.arenas.remove(uuid);
     }
 
@@ -53,14 +67,17 @@ public class InstanceManager {
         Lobby newLobby = new Lobby(uuid,world);
 
         lobbies.put(uuid, newLobby);
+        instancesByUID.put(world.getUID(), newLobby);
         return newLobby;
     }
 
     public void addLobby(UUID uuid, Lobby lobby) {
         this.lobbies.put(uuid, lobby);
+        this.instancesByUID.put(lobby.getWorld().getUID(), lobby);
     }
 
     public void removeLobby(UUID uuid) {
+        this.instancesByUID.remove(lobbies.get(uuid).getWorld().getUID());
         this.lobbies.remove(uuid);
     }
 
