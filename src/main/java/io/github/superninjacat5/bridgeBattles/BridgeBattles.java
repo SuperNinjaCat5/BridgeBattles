@@ -1,15 +1,17 @@
 package io.github.superninjacat5.bridgeBattles;
 
-import io.github.superninjacat5.bridgeBattles.basicCommands.CreateInstanceOfMap;
-import io.github.superninjacat5.bridgeBattles.basicCommands.CreateRandomInstance;
-import io.github.superninjacat5.bridgeBattles.basicCommands.GetCurrentInstance;
-import io.github.superninjacat5.bridgeBattles.basicCommands.ListInstances;
+import io.github.superninjacat5.bridgeBattles.basicCommands.*;
 import io.github.superninjacat5.bridgeBattles.instances.Instance;
 import io.github.superninjacat5.bridgeBattles.instances.InstanceManager;
+import io.github.superninjacat5.bridgeBattles.instances.arena.Arena;
 import io.github.superninjacat5.bridgeBattles.instances.lobby.Lobby;
 import io.papermc.paper.command.brigadier.BasicCommand;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -19,7 +21,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public final class BridgeBattles extends JavaPlugin implements Listener {
 
-    public InstanceManager instanceManager = new InstanceManager();
+    public InstanceManager instanceManager = new InstanceManager(this);
 
     @Override
     public void onEnable() {
@@ -38,6 +40,9 @@ public final class BridgeBattles extends JavaPlugin implements Listener {
 
         BasicCommand createInstanceOfMap = new CreateInstanceOfMap(this, instanceManager, mapManager);
         registerCommand("create_instance_of_map", createInstanceOfMap);
+
+        BasicCommand gotoLobby = new GotoLobby(instanceManager);
+        registerCommand("lobby", gotoLobby);
 
         World spawnWorld = Bukkit.getWorlds().getFirst();
         instanceManager.createLobby(spawnWorld);

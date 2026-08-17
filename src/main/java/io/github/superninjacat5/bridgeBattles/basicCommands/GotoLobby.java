@@ -14,29 +14,24 @@ import java.util.Random;
 import java.util.UUID;
 
 @NullMarked
-public class CreateRandomInstance implements BasicCommand {
+public class GotoLobby implements BasicCommand {
     private final InstanceManager instanceManager;
-    public CreateRandomInstance(InstanceManager instanceManager) {
+    public GotoLobby(InstanceManager instanceManager) {
         this.instanceManager = instanceManager;
     }
 
     @Override
     public void execute(CommandSourceStack source, String[] args) {
-        WorldCreator worldCreator = new WorldCreator("randomInstanceCreator_" + UUID.randomUUID());
-
-        Random random = new Random();
-        worldCreator.seed(random.nextLong());
-        World world = worldCreator.createWorld();
-
-        Instance newInstance = instanceManager.createArena(world);
-
         if (source.getExecutor() instanceof Player player) {
             Instance originalInstance = instanceManager.getInstanceByWorld(player.getWorld());
+            Instance lobbyInstance = instanceManager.getFirstLobby(); // CHANGE THIS if you add more complex lobby stuff
 
             originalInstance.removePlayer(player);
+
             if (originalInstance instanceof Arena arena) instanceManager.destroyArenaIfEmpty(arena);
-            player.teleport(newInstance.getWorld().getSpawnLocation());
-            newInstance.addPlayer(player);
+
+            player.teleport(lobbyInstance.getWorld().getSpawnLocation());
+            lobbyInstance.addPlayer(player);
         }
     }
 }

@@ -4,6 +4,7 @@ import io.github.superninjacat5.bridgeBattles.MapManager;
 import io.github.superninjacat5.bridgeBattles.WorldUtils;
 import io.github.superninjacat5.bridgeBattles.instances.Instance;
 import io.github.superninjacat5.bridgeBattles.instances.InstanceManager;
+import io.github.superninjacat5.bridgeBattles.instances.arena.Arena;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -83,6 +84,7 @@ public class CreateInstanceOfMap implements BasicCommand {
                 Instance originalInstance = instanceManager.getInstanceByWorld(player.getWorld());
                 if (originalInstance != null) {
                     originalInstance.removePlayer(player);
+                    if (originalInstance instanceof Arena arena) instanceManager.destroyArenaIfEmpty(arena);
                 }
 
                 player.teleport(newInstance.getWorld().getSpawnLocation());
