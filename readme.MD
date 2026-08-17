@@ -1,0 +1,1 @@
+Make sure to copy the maps dir to \plugins\BridgeBattles\maps

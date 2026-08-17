@@ -1,5 +1,6 @@
 package io.github.superninjacat5.bridgeBattles;
 
+import io.github.superninjacat5.bridgeBattles.basicCommands.CreateInstanceOfMap;
 import io.github.superninjacat5.bridgeBattles.basicCommands.CreateRandomInstance;
 import io.github.superninjacat5.bridgeBattles.basicCommands.GetCurrentInstance;
 import io.github.superninjacat5.bridgeBattles.basicCommands.ListInstances;
@@ -24,6 +25,8 @@ public final class BridgeBattles extends JavaPlugin implements Listener {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
 
+        MapManager mapManager = new MapManager(getDataFolder().toPath());
+
         BasicCommand currentInstance = new GetCurrentInstance(instanceManager);
         registerCommand("current_instance", currentInstance);
 
@@ -32,6 +35,9 @@ public final class BridgeBattles extends JavaPlugin implements Listener {
 
         BasicCommand createRandomInstance = new CreateRandomInstance(instanceManager);
         registerCommand("create_random_instance", createRandomInstance);
+
+        BasicCommand createInstanceOfMap = new CreateInstanceOfMap(this, instanceManager, mapManager);
+        registerCommand("create_instance_of_map", createInstanceOfMap);
 
         World spawnWorld = Bukkit.getWorlds().getFirst();
         instanceManager.createLobby(spawnWorld);
