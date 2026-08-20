@@ -2,8 +2,7 @@ package io.github.superninjacat5.bridgeBattles.minigames.games;
 
 import io.github.superninjacat5.bridgeBattles.MapManager;
 import io.github.superninjacat5.bridgeBattles.instances.InstanceManager;
-import io.github.superninjacat5.bridgeBattles.minigames.minigame;
-import org.bukkit.GameRule;
+import io.github.superninjacat5.bridgeBattles.minigames.Minigame;
 import org.bukkit.GameRules;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -12,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 
-public class FourPlayerBridge extends minigame {
+public class FourPlayerBridge extends Minigame {
     FourPlayerBridge(JavaPlugin plugin, InstanceManager instanceManager, MapManager mapManager) {
         super(plugin, instanceManager, mapManager);
     }

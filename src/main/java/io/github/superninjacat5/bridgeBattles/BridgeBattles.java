@@ -5,6 +5,8 @@ import io.github.superninjacat5.bridgeBattles.instances.Instance;
 import io.github.superninjacat5.bridgeBattles.instances.InstanceManager;
 import io.github.superninjacat5.bridgeBattles.instances.arena.Arena;
 import io.github.superninjacat5.bridgeBattles.instances.lobby.Lobby;
+import io.github.superninjacat5.bridgeBattles.minigames.GameRegistry;
+import io.github.superninjacat5.bridgeBattles.minigames.MatchMaker;
 import io.github.superninjacat5.bridgeBattles.parties.PartyCommand;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import org.bukkit.Location;
@@ -50,6 +52,10 @@ public final class BridgeBattles extends JavaPlugin implements Listener {
 
         World spawnWorld = Bukkit.getWorlds().getFirst();
         instanceManager.createLobby(spawnWorld);
+
+        GameRegistry gameRegistry = new GameRegistry();
+        MatchMaker matchMaker = new MatchMaker(this, mapManager, instanceManager, gameRegistry);
+
     }
 
     @EventHandler

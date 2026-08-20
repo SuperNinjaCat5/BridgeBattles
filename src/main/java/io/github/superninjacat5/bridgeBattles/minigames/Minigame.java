@@ -19,15 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class minigame {
-    public minigame(JavaPlugin plugin, InstanceManager instanceManager, MapManager mapManager) {
+public class Minigame {
+    public Minigame(JavaPlugin plugin, InstanceManager instanceManager, MapManager mapManager) {
 
         this.plugin = plugin;
         this.instanceManager = instanceManager;
         this.mapManager = mapManager;
+        this.uuid = UUID.randomUUID();
     }
 
     private final JavaPlugin plugin;
+
+    private final UUID uuid;
 
     private final InstanceManager instanceManager;
     private final MapManager mapManager;
@@ -37,6 +40,7 @@ public class minigame {
     protected Location globalSpawnLocation = null;
     protected String map_name;
     protected List<Player> players = new ArrayList<>();
+    protected int maxPlayers = 1;
 
     private void createArena(String map_name) {
         Path mapPath = mapManager.getArenaTemplate(map_name);
@@ -106,5 +110,25 @@ public class minigame {
 
         player.teleport(globalSpawnLocation);
         arena.addPlayer(player);
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public Arena getArena() {
+        return arena;
+    }
+
+    public Location getGlobalSpawnLocation() {
+        return globalSpawnLocation;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
     }
 }
